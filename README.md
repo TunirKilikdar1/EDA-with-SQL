@@ -1,5 +1,7 @@
 #Exploritary Data Analysis Project With SQL
 
+
+
 Part 1: SQL Data Cleaning and Standardization
 
 ## Project Overview
