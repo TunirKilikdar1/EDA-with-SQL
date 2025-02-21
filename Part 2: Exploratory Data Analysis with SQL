@@ -598,7 +598,3 @@ The complete SQL script—including all the analysis queries above—is included
 ## 8. Conclusion
 
 This project demonstrates a comprehensive approach to analyzing company layoffs data using SQL. By aggregating, calculating rolling totals, and ranking by various dimensions (company, industry, country, stage, etc.), the analysis provides actionable insights that can inform business decisions and further investigations.
-
----
-
-Feel free to update or expand this README as the project evolves.
