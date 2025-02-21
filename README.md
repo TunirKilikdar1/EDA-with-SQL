@@ -563,13 +563,10 @@ WHERE rankings <= 5;
 
 ---
 
-## Future Enhancements
+## Future Enhancements To Consider
 
 - **Advanced Visualizations:**  
   Integrate outputs with visualization tools such as Tableau or Power BI to create interactive dashboards.
-
-- **Further Temporal Analysis:**  
-  Extend the analysis to include quarterly trends or examine the impact of specific market events.
 
 - **Enhanced Metrics:**  
   Incorporate additional KPIs or predictive analytics to forecast future layoff trends.
