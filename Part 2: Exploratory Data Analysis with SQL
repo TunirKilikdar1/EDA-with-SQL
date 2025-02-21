@@ -1,0 +1,710 @@
+# SQL Layoffs Data Analysis and Cleanup Project
+
+## Overview
+
+This project focuses on cleaning, standardizing, and analyzing a dataset containing company layoffs. The dataset includes details such as the company name, location, industry, total layoffs, percentage of employees laid off, date, stage, country, and funds raised (in millions). The main goal is to ensure that the data is reliable and consistent before conducting further analysis.
+
+## Objectives
+
+- **Data Backup and Integrity:**  
+  Back up the original data to ensure that we have a preserved version before performing any modifications.
+
+- **Duplicate Removal:**  
+  Identify and remove duplicate records to prevent skewing analysis results.
+
+- **Data Standardization:**  
+  - Trim extra whitespace from textual fields.
+  - Standardize industry and country names.
+  - Convert date strings to a uniform format (YYYY-MM-DD) and enforce proper data types.
+
+- **Handling Missing Values:**  
+  Identify and remove records with missing critical fields.
+
+- **Data Aggregation and Analysis:**  
+  Compute aggregate metrics (sums, averages, percentages) and group data by dimensions like company, industry, country, stage, and date.
+
+- **Rolling Totals and Ranking:**  
+  Use window functions to calculate rolling (cumulative) totals and rank entities (companies, industries, countries) by layoffs.
+
+## Table of Contents
+
+1. [Data Backup and Duplicate Removal](#data-backup-and-duplicate-removal)
+2. [Data Standardization](#data-standardization)
+3. [Data Aggregation and Analysis](#data-aggregation-and-analysis)
+   - [Basic Aggregates](#basic-aggregates)
+   - [Aggregations by Company, Industry, Country, Stage, and Date](#aggregations-by-various-dimensions)
+   - [Time-Based Aggregations](#time-based-aggregations)
+   - [Rolling Totals](#rolling-totals)
+4. [Ranking Analyses](#ranking-analyses)
+5. [Additional Queries for Specific Insights](#additional-queries)
+6. [How to Run This Project](#how-to-run-this-project)
+7. [Future Enhancements](#future-enhancements)
+8. [Conclusion](#conclusion)
+
+---
+
+## 1. Data Backup and Duplicate Removal
+
+### Backup Original Data
+
+Before making any changes, we create a backup of the original `layoffs` table. This ensures that the raw data is preserved.
+
+```sql
+-- Retrieve all records from the 'layoffs' table
+SELECT * 
+FROM layoffs;
+
+-- Create a backup table 'layoffs_bk' with the same structure as 'layoffs'
+CREATE TABLE layoffs_bk
+LIKE layoffs;
+
+-- Insert all records from 'layoffs' into 'layoffs_bk'
+INSERT INTO layoffs_bk
+SELECT * 
+FROM layoffs;
+```
+
+### Identify and Remove Duplicates
+
+Duplicates are identified using a Common Table Expression (CTE) with `ROW_NUMBER()` partitioned by key columns. Records with a `row_num` greater than 1 are considered duplicates.
+
+```sql
+-- Remove duplicate records based on specific columns
+WITH dupl_cte AS (
+    SELECT *,
+           ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, 
+                             percentage_laid_off, `date`, stage, country, funds_raised_millions 
+                             ORDER BY (SELECT NULL)) AS row_num
+    FROM layoffs_bk
+)
+-- Select duplicate records (row_num > 1) for review
+SELECT *
+FROM dupl_cte
+WHERE row_num > 1;
+```
+
+Next, we create a new table (`layoffs_bk2`) that includes the `row_num` column, insert the data with row numbers, and then delete duplicates:
+
+```sql
+-- Create a new table 'layoffs_bk2' with an additional 'row_num' column
+CREATE TABLE layoffs_bk2 (
+  company TEXT,
+  location TEXT,
+  industry TEXT,
+  total_laid_off INT DEFAULT NULL,
+  percentage_laid_off TEXT,
+  `date` TEXT,
+  stage TEXT,
+  country TEXT,
+  funds_raised_millions INT DEFAULT NULL,
+  row_num INT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Insert records into 'layoffs_bk2' with a row number for each partition of duplicates
+INSERT INTO layoffs_bk2
+SELECT *,
+       ROW_NUMBER() OVER(PARTITION BY company, location, industry, total_laid_off, 
+                         percentage_laid_off, `date`, stage, country, funds_raised_millions 
+                         ORDER BY (SELECT NULL)) AS row_num
+FROM layoffs_bk;
+
+-- Delete duplicate records, keeping only the first occurrence
+DELETE
+FROM layoffs_bk2
+WHERE row_num > 1;
+
+-- Verify the contents of 'layoffs_bk2' after deletion
+SELECT *
+FROM layoffs_bk2;
+```
+
+---
+
+## 2. Data Standardization
+
+### Text Fields and Country Names
+
+We standardize the `company`, `industry`, and `country` columns by trimming whitespace, removing unwanted text, and cleaning up punctuation.
+
+```sql
+-- Standardize data by trimming whitespace from the 'company' column
+UPDATE layoffs_bk2
+SET company = TRIM(company);
+
+-- Review distinct 'industry' values to identify inconsistencies
+SELECT DISTINCT industry
+FROM layoffs_bk2
+ORDER BY industry;
+
+-- Identify records where 'industry' starts with 'Crypto'
+SELECT *
+FROM layoffs_bk2
+WHERE industry LIKE 'Crypto%';
+
+-- Standardize 'industry' values by removing the word 'Currency' and trimming whitespace
+UPDATE layoffs_bk2
+SET industry = TRIM(REPLACE(industry, 'Currency', ''));
+
+-- Review distinct 'country' values and their trimmed versions
+SELECT DISTINCT country, TRIM(TRAILING '.' FROM country) AS trimmed_country
+FROM layoffs_bk2
+ORDER BY country;
+
+-- Standardize 'country' names by removing trailing periods for entries starting with 'United states'
+UPDATE layoffs_bk2
+SET country = TRIM(TRAILING '.' FROM country)
+WHERE country LIKE 'United states%';
+```
+
+### Date Conversion
+
+Convert dates from a potential `MM/DD/YYYY` format to the standard `YYYY-MM-DD` format and update the column type.
+
+```sql
+-- Convert 'date' values from 'MM/DD/YYYY' format to 'YYYY-MM-DD' format
+UPDATE layoffs_bk2
+SET `date` = CASE 
+    WHEN `date` LIKE '%/%/%' THEN STR_TO_DATE(`date`, '%m/%d/%Y')
+    ELSE `date`
+END;
+
+-- Modify the 'date' column to enforce DATE data type
+ALTER TABLE layoffs_bk2
+MODIFY COLUMN `date` DATE;
+```
+
+### Handling Missing Data
+
+Remove records with missing critical values to ensure data quality.
+
+```sql
+-- Identify records with NULL 'total_laid_off' and 'percentage_laid_off' values
+SELECT *
+FROM layoffs_bk2
+WHERE total_laid_off IS NULL
+  AND percentage_laid_off IS NULL;
+
+-- Delete records where both 'total_laid_off' and 'percentage_laid_off' are NULL
+DELETE 
+FROM layoffs_bk2
+WHERE total_laid_off IS NULL
+  AND percentage_laid_off IS NULL;
+```
+
+### Inferring Missing Industry Values
+
+For certain companies, if the `industry` field is missing or empty, we update it with a known category.
+
+```sql
+-- Identify records with NULL or empty 'industry' values for review
+SELECT *
+FROM layoffs_bk2
+WHERE industry IS NULL
+   OR industry = '';
+
+-- Review records for specific companies to determine appropriate 'industry' values
+SELECT *
+FROM layoffs_bk2
+WHERE company = 'Airbnb';
+
+SELECT *
+FROM layoffs_bk2
+WHERE company = "Bally's Interactive";
+
+SELECT *
+FROM layoffs_bk2
+WHERE company = 'Carvana';
+
+SELECT *
+FROM layoffs_bk2
+WHERE company = 'Juul';
+
+-- Update 'industry' values based on 'company' names for specific cases
+UPDATE layoffs_bk2
+SET industry = CASE 
+    WHEN company = 'Carvana' AND (industry = '' OR industry IS NULL) THEN 'Transportation'
+    WHEN company = 'Juul' AND (industry = '' OR industry IS NULL) THEN 'Consumer'
+    WHEN company = 'Airbnb' AND (industry = '' OR industry IS NULL) THEN 'Travel'
+    ELSE industry
+END
+WHERE company IN ('Carvana', 'Juul', 'Airbnb');
+```
+
+### Finalizing the Cleaned Data
+
+After cleaning, rename the table to `layoffs_final` and remove any auxiliary columns.
+
+```sql
+-- Rename the cleaned and processed table to 'layoffs_final'
+RENAME TABLE layoffs_bk2 TO layoffs_final;
+
+-- Verify the contents of 'layoffs_final' after renaming
+SELECT *
+FROM layoffs_final;
+
+-- Remove the 'row_num' column as it's no longer needed
+ALTER TABLE layoffs_final
+DROP COLUMN row_num;
+```
+
+---
+
+## 3. Data Aggregation and Analysis
+
+### Basic Aggregates
+
+Obtain an overview of the dataset by checking its date range and computing basic metrics.
+
+```sql
+-- Analyze the date range of the dataset (between 2020-01-04 and 2023-12-02)
+SELECT min(`date`), max(`date`)
+FROM layoffs_final;
+
+-- Retrieve maximum and average values for total_laid_off and percentage_laid_off
+SELECT max(total_laid_off), avg(total_laid_off), max(percentage_laid_off), avg(percentage_laid_off)
+FROM layoffs_final;
+```
+
+### Aggregations by Specific Dimensions
+
+#### Aggregations by Company
+
+```sql
+-- Sum the total layoffs per company, ordered by the highest sum first
+SELECT company, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY company
+ORDER BY 2 DESC;
+
+-- Calculate total layoffs per company, overall total layoffs, and percentage share
+SELECT company, sum(total_laid_off),
+(
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) AS total_layoff,
+(sum(total_laid_off) / (
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
+FROM layoffs_final
+GROUP BY company
+ORDER BY 2 DESC
+LIMIT 10;
+
+-- Retrieve the 5 companies with the smallest non-null sum of layoffs
+SELECT company, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY company
+HAVING sum(total_laid_off) IS NOT NULL
+ORDER BY 2
+LIMIT 5;
+```
+
+#### Aggregations by Industry
+
+```sql
+-- Sum total layoffs per industry, ordered by the highest sum first
+SELECT industry, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY industry
+ORDER BY 2 DESC;
+
+-- Compute industry aggregates along with overall totals and percentage share
+SELECT industry, sum(total_laid_off),
+(
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) AS total_layoff,
+(sum(total_laid_off) / (
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
+FROM layoffs_final
+GROUP BY industry
+ORDER BY 2 DESC
+LIMIT 5;
+
+-- Sum total layoffs per non-null industry (ascending order)
+SELECT industry, sum(total_laid_off)
+FROM layoffs_final
+WHERE industry IS NOT NULL
+GROUP BY industry
+ORDER BY 2
+LIMIT 5;
+```
+
+#### Aggregations by Country
+
+```sql
+-- Sum total layoffs per country, ordered by highest sum first
+SELECT country, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY country
+ORDER BY 2 DESC;
+
+-- Compute country aggregates along with overall totals and percentage share
+SELECT country, sum(total_laid_off),
+(
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) AS total_layoff,
+(sum(total_laid_off) / (
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
+FROM layoffs_final
+GROUP BY country
+ORDER BY 2 DESC
+LIMIT 5;
+
+-- Sum total layoffs per country with non-null values (ascending order)
+SELECT country, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY country
+HAVING sum(total_laid_off) IS NOT NULL
+ORDER BY 2
+LIMIT 5;
+```
+
+#### Aggregations by Stage
+
+```sql
+-- For each stage, compute total layoffs, overall total, and percentage share
+SELECT stage, sum(total_laid_off),
+(
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) AS total_layoff,
+(sum(total_laid_off) / (
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
+FROM layoffs_final
+GROUP BY stage
+ORDER BY 2 DESC
+LIMIT 5;
+
+-- Sum total layoffs per stage, filtering out null stage values (ascending order)
+SELECT stage, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY stage
+HAVING sum(total_laid_off) AND stage IS NOT NULL
+ORDER BY 2
+LIMIT 5;
+```
+
+#### Aggregations by Date
+
+```sql
+-- Sum total layoffs for each date (highest totals first)
+SELECT `date`, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY `date`
+HAVING sum(total_laid_off) AND `date` IS NOT NULL
+ORDER BY 2 DESC
+LIMIT 10;
+
+-- Sum total layoffs for each date (ascending order)
+SELECT `date`, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY `date`
+HAVING sum(total_laid_off) AND `date` IS NOT NULL
+ORDER BY 2
+LIMIT 5;
+```
+
+#### Aggregations by Year and Month
+
+```sql
+-- Sum total layoffs per year, filtering out null years
+SELECT YEAR(`date`) AS year, sum(total_laid_off)
+FROM layoffs_final
+GROUP BY year
+HAVING year IS NOT NULL
+ORDER BY 2 DESC;
+
+-- Aggregation by Month: Compute totals and percentages
+SELECT MONTH(`date`) AS month, sum(total_laid_off),
+(
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) AS total_layoff,
+(sum(total_laid_off) / (
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
+FROM layoffs_final
+GROUP BY month
+HAVING month IS NOT NULL
+ORDER BY 2 DESC;
+
+-- Aggregation by Year and Month: Compute totals and percentages
+SELECT MONTH(`date`) AS month, YEAR(`date`) AS year, sum(total_laid_off),
+(
+  SELECT SUM(total_laid_off)
+  FROM layoffs_final
+) AS total_layoff,
+(SUM(total_laid_off) / (
+  SELECT SUM(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
+FROM layoffs_final
+GROUP BY year, month
+HAVING month IS NOT NULL AND year IS NOT NULL
+ORDER BY 3 DESC;
+```
+
+### Rolling Totals
+
+Compute a cumulative sum of monthly totals over time using a window function:
+
+```sql
+-- Calculate monthly totals and a rolling (cumulative) total ordered by year and month
+SELECT 
+    month, 
+    year, 
+    monthly_total,
+    SUM(monthly_total) OVER (ORDER BY year, month) AS rolling_total,
+    total_layoff
+FROM (
+    SELECT 
+        MONTH(`date`) AS month, 
+        YEAR(`date`) AS year,
+        SUM(total_laid_off) AS monthly_total,
+        (SELECT SUM(total_laid_off) FROM layoffs_final) AS total_layoff
+    FROM layoffs_final
+    WHERE `date` IS NOT NULL
+    GROUP BY YEAR(`date`), MONTH(`date`)
+) AS sub
+ORDER BY year, month;
+```
+
+---
+
+## 4. Ranking Analyses
+
+### Ranking Companies by Monthly Layoffs
+
+Rank companies based on their monthly layoffs (overall ranking):
+
+```sql
+-- Rank companies based on their monthly layoffs (not partitioned by month)
+WITH SUB AS (
+    SELECT company, MONTH(`date`) AS month, YEAR(`date`) AS year,
+           SUM(total_laid_off) AS monthly_layoff,
+           (SELECT SUM(total_laid_off) FROM layoffs_final) AS total_layoff
+    FROM layoffs_final
+    GROUP BY company, year, month
+    HAVING SUM(total_laid_off) IS NOT NULL
+    ORDER BY 4 DESC
+)
+SELECT
+    DENSE_RANK() OVER(ORDER BY monthly_layoff DESC) AS rankings, 
+    company, month, year, monthly_layoff
+FROM SUB;
+```
+
+### Ranking Companies by Yearly Layoffs
+
+Rank companies overall based on yearly layoffs:
+
+```sql
+-- Rank companies based on yearly layoffs overall
+WITH SUB AS (
+    SELECT company, YEAR(`date`) AS year,
+           SUM(total_laid_off) AS yearly_layoff,
+           (SELECT SUM(total_laid_off) FROM layoffs_final) AS total_layoff
+    FROM layoffs_final
+    GROUP BY company, year
+    HAVING SUM(total_laid_off) IS NOT NULL
+    ORDER BY 3 DESC
+)
+SELECT
+    DENSE_RANK() OVER(ORDER BY yearly_layoff DESC) AS rankings, 
+    company, year, yearly_layoff
+FROM SUB;
+```
+
+### Top-Ranked Companies by Year (Top 5 per Year)
+
+Rank companies by yearly layoffs for each year, selecting only the top 5 for each year:
+
+```sql
+-- Rank companies by yearly layoffs for each year, and select the top 5 companies per year
+WITH SUB AS (
+    SELECT company, YEAR(`date`) AS year,
+           SUM(total_laid_off) AS yearly_layoff,
+           (SELECT SUM(total_laid_off) FROM layoffs_final) AS total_layoff
+    FROM layoffs_final
+    GROUP BY company, year
+    HAVING SUM(total_laid_off) IS NOT NULL
+    ORDER BY 3 DESC
+), company_rank AS (
+    SELECT
+        DENSE_RANK() OVER(PARTITION BY year ORDER BY yearly_layoff DESC) AS rankings, 
+        company, year, yearly_layoff
+    FROM SUB
+    WHERE year IS NOT NULL
+)
+SELECT *
+FROM company_rank
+WHERE rankings <= 5;
+
+-- If a pre-defined CTE named 'company_rank' exists, you can retrieve the top-ranked companies with:
+SELECT *
+FROM company_rank
+WHERE rankings <= 5;
+```
+
+### Ranking Industries by Yearly Layoffs (Top 5 per Year)
+
+Rank industries for each year and select the top 5 industries:
+
+```sql
+-- Top 5 Industries by Yearly Layoffs
+-- Rank industries based on their total layoffs each year and select the top 5 industries per year.
+WITH SUB AS (
+    SELECT industry, 
+           YEAR(`date`) AS year,
+           SUM(total_laid_off) AS yearly_layoff,
+           (SELECT SUM(total_laid_off) FROM layoffs_final) AS total_layoff 
+    FROM layoffs_final
+    GROUP BY industry, year             
+    HAVING SUM(total_laid_off) IS NOT NULL  
+), 
+ind_rank AS (
+    SELECT DENSE_RANK() OVER (PARTITION BY year ORDER BY yearly_layoff DESC) AS rankings, 
+           industry, 
+           year, 
+           yearly_layoff
+    FROM SUB
+    WHERE year IS NOT NULL             
+)
+SELECT *
+FROM ind_rank
+WHERE rankings <= 5;
+```
+
+### Ranking Countries by Yearly Layoffs (Top 5 per Year)
+
+Rank countries for each year and select the top 5 countries:
+
+```sql
+-- Top 5 Countries by Yearly Layoffs
+-- Rank countries based on their total layoffs each year and select the top 5 countries per year.
+WITH SUB AS (
+    SELECT country, 
+           YEAR(`date`) AS year,
+           SUM(total_laid_off) AS yearly_layoff,
+           (SELECT SUM(total_laid_off) FROM layoffs_final) AS total_layoff  
+    FROM layoffs_final
+    GROUP BY country, year             
+    HAVING SUM(total_laid_off) IS NOT NULL  
+    ORDER BY yearly_layoff DESC        
+), 
+coun_rank AS (
+    SELECT DENSE_RANK() OVER (PARTITION BY year ORDER BY yearly_layoff DESC) AS rankings, 
+           country, 
+           year, 
+           yearly_layoff
+    FROM SUB
+    WHERE year IS NOT NULL             
+)
+SELECT *
+FROM coun_rank
+WHERE rankings <= 5;
+```
+
+---
+
+## 5. Additional Queries for Specific Insights
+
+### Complete Shutdowns Analysis
+
+Examine companies that experienced a 100% layoff (complete shutdown) and analyze them by month, and order the results by shutdown counts.
+
+```sql
+-- Retrieve the top 10 records where 100% of employees (percentage_laid_off = 1) were laid off,
+-- ordering by the highest total_laid_off first
+SELECT *
+FROM layoffs_final
+WHERE percentage_laid_off = 1
+ORDER BY total_laid_off DESC
+LIMIT 10;
+
+-- Calculate the number of companies that experienced a complete shutdown (100% layoffs)
+SELECT MONTH(`date`) AS month, YEAR(`date`) AS year, COUNT(company) AS company_shutdown
+FROM layoffs_final
+WHERE percentage_laid_off = 1
+GROUP BY month, year
+ORDER BY company_shutdown DESC;
+```
+
+There is also a duplicate of the shutdown query with more in-line comments for clarity:
+
+```sql
+-- Company Shutdowns by Month and Year
+-- Calculate the number of companies that experienced a complete shutdown
+SELECT MONTH(`date`) AS month, 
+       YEAR(`date`) AS year, 
+       COUNT(company) AS company_shutdown
+FROM layoffs_final
+WHERE percentage_laid_off = 1        -- Filter to include only records with 100% layoffs (i.e., complete shutdowns)
+GROUP BY month, year                 -- Group results by month and year to get aggregate counts per period
+ORDER BY company_shutdown DESC;      -- Order by the shutdown count in descending order
+```
+
+Additionally, we analyze shutdowns based on funds raised:
+
+```sql
+-- Retrieve records where 100% of employees were laid off, ordered by funds_raised_millions
+SELECT *
+FROM layoffs_final
+WHERE percentage_laid_off = 1
+ORDER BY funds_raised_millions DESC;
+
+-- Retrieve top 10 companies (with location and country) where 100% of employees were laid off,
+-- ordered by funds_raised_millions in descending order
+SELECT company, location, country, funds_raised_millions
+FROM layoffs_final
+WHERE percentage_laid_off = 1
+ORDER BY funds_raised_millions DESC
+LIMIT 10;
+```
+
+---
+
+## 6. How to Run This Project
+
+1. **Clone the Repository:**  
+   Clone or download the repository to your local machine.
+
+2. **Set Up Your SQL Environment:**  
+   Ensure you have MySQL 8.0 or later installed (for CTE and window function support). Create a database and grant appropriate permissions.
+
+3. **Execute the SQL Script:**  
+   Run the complete SQL script (as outlined in this README) in your SQL client. The script will:
+   - Backup the original data.
+   - Clean and standardize the data.
+   - Perform various aggregate analyses.
+   - Compute rolling totals and rankings.
+   - Output results for further analysis.
+
+## 7. Future Enhancements
+
+- **Automation:**  
+  Develop an automated ETL pipeline to run these queries regularly as new data becomes available.
+
+- **Data Enrichment:**  
+  Integrate additional data sources to further enrich the analysis (e.g., market data, news articles).
+
+- **Visualization:**  
+  Use BI tools like Tableau or Power BI to create dashboards based on the cleaned and processed data.
+
+## 8. Conclusion
+
+This project demonstrates a systematic approach to data cleaning, standardization, aggregation, and analysis using SQL. By following these steps—from backing up and cleaning the data to performing detailed aggregations and rankings—the final dataset (`layoffs_final`) is reliable and ready for in-depth analysis. This preparation helps ensure that any business decisions made based on the data will be well-informed and accurate.
+
+---
+
+Feel free to modify this README as needed and expand upon it as the project evolves.
