@@ -7,7 +7,7 @@ This repository contains a set of SQL queries designed to analyze a dataset of c
 
 > **Note:**  
 > This project is solely focused on data analysis. It does not include any data cleaning or transformation queries. The analysis queries assume that the data in `layoffs_final` is already prepared for exploration.
-
+*/
 
 -- Retrieve all records from the final layoffs table
 SELECT *
