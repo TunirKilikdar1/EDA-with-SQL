@@ -1,3 +1,14 @@
+/*
+## Part 2: SQL Layoffs Data Analysis
+
+## Overview
+
+This repository contains a set of SQL queries designed to analyze a dataset of company layoffs stored in the table `layoffs_final`. The analysis covers a wide range of metrics including date range, aggregate layoffs, and rankings by various dimensions (company, industry, country, stage, etc.). The purpose of these queries is to gain insights into the layoffs data—identifying trends, evaluating the impact of complete shutdowns, and ranking entities based on layoff numbers.
+
+> **Note:**  
+> This project is solely focused on data analysis. It does not include any data cleaning or transformation queries. The analysis queries assume that the data in `layoffs_final` is already prepared for exploration.
+
+
 -- Retrieve all records from the final layoffs table
 SELECT *
 FROM layoffs_final;
