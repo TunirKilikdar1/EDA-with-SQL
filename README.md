@@ -1,4 +1,4 @@
-# SQL Layoffs Data Analysis Project
+# Company Layoffs Exploratory Data Analysis Project With SQL
 
 ## Executive Insights
 
