@@ -2,7 +2,7 @@
 
 ## Executive Insights
 
-The analysis of our competitor layoff data—covering the period from **March 2020 to February 2023**—reveals several important trends:
+The analysis of our competitor layoff data—covering the period from **March 2020 to December 2023**—reveals several important trends:
 
 - **Overall Impact:**  
   During this period, a total of **386,379** employees were laid off. On average, each company reduced its workforce by **238** employees, approximately **25.92%** of their workforce. In extreme cases, layoffs reached up to **12,000** employees.
@@ -578,7 +578,7 @@ WHERE rankings <= 5;
 This competitor layoff data analysis—covering the period from **March 2020 to February 2023**—provides critical insights into market dynamics and workforce reductions. Nearly **386,379** employees were laid off during this period, with companies, on average, reducing their workforce by **238** employees (or **25.92%**). High-profile complete shutdowns, particularly among well-funded companies like Katerra, Britishvolt, Quibi, and Deliveroo Australia, highlight the unpredictable nature of the market.
 
 Key findings indicate:
-- **Temporal Variations:** Peaks in shutdowns occurred in November 2022 and throughout 2022, with early 2023 already showing significant activity.
+- **Temporal Variations:** Peaks in shutdowns occurred in November 2022 and throughout 2022, with early 2023 showing significant activity.
 - **Industry and Geographic Concentration:** The consumer sector, along with the United States and India, bore the highest impact.
 - **Lifecycle Vulnerabilities:** Post-IPO and seed-stage companies were particularly affected, suggesting that maturity and funding stage play a crucial role in workforce stability.
 - **Seasonal Trends:** Strategic workforce planning is essential given the varying monthly layoff volumes.
