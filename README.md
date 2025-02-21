@@ -1,7 +1,3 @@
-Below is an example of a comprehensive README.md file that combines all the analysis queries with their underlying logic, along with executive insights at the beginning and a conclusion at the end.
-
----
-
 # SQL Layoffs Data Analysis Project
 
 ## Executive Insights
@@ -591,7 +587,3 @@ Key findings indicate:
 - **Seasonal Trends:** Strategic workforce planning is essential given the varying monthly layoff volumes.
 
 These insights provide a roadmap for stakeholders to build more resilient business strategies, optimize workforce planning, and adapt to ongoing market challenges.
-
----
-
-Feel free to update or expand this README as the project evolves.
