@@ -31,12 +31,6 @@ WHERE percentage_laid_off = 1
 ORDER BY total_laid_off DESC
 LIMIT 10;
 
-SELECT MONTH(`date`) AS month, YEAR(`date`) AS year, COUNT(company) as company_shutdown
-FROM layoffs_final
-WHERE percentage_laid_off = 1
-GROUP BY month,year
-ORDER BY company_shutdown DESC;
-
 
 -- Company Shutdowns by Month and Year
 -- Calculate the number of companies that experienced a complete shutdown
@@ -44,10 +38,17 @@ SELECT MONTH(`date`) AS month,
        YEAR(`date`) AS year, 
        COUNT(company) AS company_shutdown
 FROM layoffs_final
-WHERE percentage_laid_off = 1        -- Filter to include only records with 100% layoffs (i.e., complete shutdowns)
-GROUP BY month, year                 -- Group results by month and year to get aggregate counts per period
-ORDER BY company_shutdown DESC;      -- Order by the shutdown count in descending order
+WHERE percentage_laid_off = 1       
+GROUP BY month, year                 
+ORDER BY company_shutdown DESC;
 
+SELECT 
+       YEAR(`date`) AS year, 
+       COUNT(company) AS company_shutdown
+FROM layoffs_final
+WHERE percentage_laid_off = 1       
+GROUP BY year                 
+ORDER BY company_shutdown DESC;
 
 -- Retrieve records where 100% of employees were laid off, ordered by funds_raised_millions
 SELECT *
@@ -193,6 +194,16 @@ GROUP BY stage
 ORDER BY 2 DESC
 LIMIT 5;
 
+-- For each stage, calculate:
+-- the average percemtage of layoffs,
+
+SELECT stage, avg(percentage_laid_off)
+FROM layoffs_final
+WHERE percentage_laid_off IS NOT NULL
+GROUP BY stage
+ORDER BY 2 DESC
+LIMIT 5;
+
 -- Sum total layoffs per stage, filtering out null stage values (limit 5)
 SELECT stage, sum(total_laid_off)
 FROM layoffs_final
@@ -226,7 +237,12 @@ LIMIT 5;
 -- ***************************************************************
 
 -- Sum total layoffs per year, filtering out null years, ordered by highest sum first
-SELECT YEAR(`date`) AS year, sum(total_laid_off)
+-- - and the percentage share of total layoffs.
+SELECT YEAR(`date`) AS year, sum(total_laid_off),
+(sum(total_laid_off) / (
+  SELECT sum(total_laid_off)
+  FROM layoffs_final
+) * 100) AS perc_of_total_layoff
 FROM layoffs_final
 GROUP BY year
 HAVING year IS NOT NULL
@@ -372,15 +388,6 @@ SELECT *
 FROM company_rank
 WHERE rankings <= 5;
 
--- Top-Ranked Companies (Assuming 'company_rank' CTE is Defined)
--- Retrieve all columns from the pre-defined ranking result (company_rank)
--- and return only the companies that are ranked in the top 5.
-
-SELECT *
-FROM company_rank
-WHERE rankings <= 5;                 
-
-
 
 -- Top 5 Industries by Yearly Layoffs
 -- Rank industries based on their total layoffs each year and selects the top 5 industries per year.
@@ -434,6 +441,5 @@ coun_rank AS (
 SELECT *
 FROM coun_rank
 WHERE rankings <= 5;                 
-
 
 
