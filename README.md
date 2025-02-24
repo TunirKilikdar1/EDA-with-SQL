@@ -1,4 +1,19 @@
 # Company Layoffs Exploratory Data Analysis Project With SQL and Power BI
+This project leverages SQL and Power BI to deliver a comprehensive analysis of competitor layoffs data with a total of **1000** records. Our analysis focuses on key north star metrics that highlight overall workforce reductions, the average impact per company, and detailed breakdowns by industry, geography, and time periods. The dashboards and queries reveal seasonal trends, patterns in company shutdowns, and ranking insights that are essential for understanding market dynamics and identifying areas of vulnerability and opportunity. These metrics provide a clear, strategic view of the evolving landscape and support data-driven decision-making. Note that the CSV file had to go though data cleaning before being considered eligible for the exploratory data analysis and then further visualization.For a detailed view of the data cleaning queries, [click here](./data_cleaning.sql).  For further insights on the EDA SQL analysis, [click here](./analysis.sql).
+
+
+## Table of Contents
+
+
+1. [Executive Insights](#executive-insights)
+2. [Dashboard Overview](#dashboard-overview)
+3. [Time Series Trends](#time-series-trends)
+4. [Industry Breakdown](#industry-breakdown)
+5. [Geographic Distribution](#geographic-distribution)
+6. [Company Rankings](#company-rankings)
+7. [Conclusion](#conclusion)
+
+---
 
 ## Executive Insights
 
@@ -24,24 +39,13 @@ The analysis of our competitor layoff data—covering the period from **March 20
 
 ---
 
-## Table of Contents
-
-
-1. [Dashboard Overview](#dashboard-overview)
-2. [Time Series Trends](#time-series-trends)
-3. [Industry Breakdown](#industry-breakdown)
-4. [Geographic Distribution](#geographic-distribution)
-5. [Company Rankings](#company-rankings)
-6. [Conclusion](#conclusion)
-
----
-
 ## Dashboard Overview
 
 The main dashboard provides an at-a-glance view of key metrics such as total layoffs, average layoffs per company, and overall percentages. This visualization sets the context for the deeper analyses presented in subsequent sections.
 
 ![Dashboard Overview](images/dashboard_overview.png)
 
+Note: Th
 ---
 
 ## Time Series Trends
