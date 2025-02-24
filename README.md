@@ -45,7 +45,6 @@ The main dashboard provides an at-a-glance view of key metrics such as total lay
 
 ![Dashboard Overview](images/dashboard_overview.png)
 
-Note: Th
 ---
 
 ## Time Series Trends
