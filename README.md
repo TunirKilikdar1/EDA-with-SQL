@@ -1,4 +1,4 @@
-# Company Layoffs Exploratory Data Analysis Project With SQL
+# Company Layoffs Exploratory Data Analysis Project With SQL and Power BI
 
 ## Executive Insights
 
@@ -582,5 +582,118 @@ Key findings indicate:
 - **Industry and Geographic Concentration:** The consumer sector, along with the United States and India, bore the highest impact.
 - **Lifecycle Vulnerabilities:** Post-IPO and seed-stage companies were particularly affected, suggesting that maturity and funding stage play a crucial role in workforce stability.
 - **Seasonal Trends:** Strategic workforce planning is essential given the varying monthly layoff volumes.
+- **High Overall Impact:**  
+  Nearly **386,379** employees were laid off over the analyzed period, with an average layoff of **238 employees per company** (25.92%). The extreme cases, such as layoffs of up to **12,000** employees, highlight the market's volatility.
+- **Sector & Geographic Insights:**  
+  The consumer sector and the United States show the highest impact, while other regions and industries are relatively less affected. This concentration emphasizes the importance of targeted strategies in the most affected areas.
+- **Critical Case Studies:**  
+  The complete shutdowns of well-funded companies like Katerra, as well as significant layoffs at major tech giants, underscore the challenges across different segments of the market.
+- **Actionable Trends:**  
+  The clear seasonal patterns and year-over-year shifts observed in the dashboard support proactive workforce planning and strategic decision-making. Recognizing these trends allows stakeholders to better manage risk and optimize resource allocation.
+
+Overall, the integration of Power BI visualizations with our data analysis not only validates the SQL insights but also provides a dynamic platform for continuous monitoring and deeper exploration of the layoffs data. Stakeholders can leverage these insights to build more resilient business strategies and adapt effectively to the evolving market landscape.
 
 These insights provide a roadmap for stakeholders to build more resilient business strategies, optimize workforce planning, and adapt to ongoing market challenges.
+
+
+
+
+Below is an example of a comprehensive README.md that integrates your executive insights and conclusion with Power BI visualization screenshots. You can adjust the image file names as needed based on your actual screenshots.
+
+---
+
+# Power BI Layoffs Data Analysis Dashboard
+
+## Executive Insights
+
+The Power BI dashboard provides a comprehensive view of competitor layoffs data covering the period from **March 2020 to February 2023**. Key insights include:
+
+- **Overall Impact:**  
+  A total of **386,379** employees were laid off during this period. On average, each company reduced its workforce by **238 employees** (approximately **25.92%** of their workforce), with some companies experiencing layoffs of up to **12,000** employees.
+
+- **Complete Shutdowns:**  
+  High-profile cases such as **Katerra**—which completely shut down by laying off its entire staff of **2,434** despite having raised **$1,600 million**—illustrate the extreme measures taken even by well-funded companies. Other companies like Britishvolt, Quibi, and Deliveroo Australia (each with over **$1,500 million** in funding) also faced complete shutdowns.
+
+- **Temporal Patterns:**  
+  November 2022 recorded the highest number of shutdowns (11 in that month), and 2022 saw the greatest overall number of shutdowns (58). Early 2023 already indicates **127,277** layoffs, suggesting that the full-year figures may be even higher.
+
+- **Industry & Geographic Trends:**  
+  The consumer sector led layoffs with **47,082** employees (12%), followed by retail (43,613, 11%), transportation (34,498, 9%), and finance (28,344, 7%). Geographically, the United States accounted for 67% (258,159 employees) of the layoffs, while India represented 9% (35,993 employees).
+
+- **Company Lifecycle:**  
+  Post-IPO companies were the most affected (53% of layoffs, or 204,882 employees), whereas acquired companies accounted for 7.5% (29,176 employees). Seed-stage companies, on average, laid off 70% of their workforce, with Series A and B companies experiencing 38% and 32% layoffs, respectively.
+
+---
+
+## Table of Contents
+
+1. [Dashboard Overview](#dashboard-overview)
+2. [Time Series Trends](#time-series-trends)
+3. [Industry Breakdown](#industry-breakdown)
+4. [Geographic Distribution](#geographic-distribution)
+5. [Company Rankings](#company-rankings)
+6. [Conclusion](#conclusion)
+
+---
+
+## Dashboard Overview
+
+The main dashboard provides an at-a-glance view of key metrics such as total layoffs, average layoffs per company, and overall percentages. This visualization sets the context for the deeper analyses presented in subsequent sections.
+
+![Dashboard Overview](images/dashboard_overview.png)
+
+---
+
+## Time Series Trends
+
+The time series chart displays layoffs over the period from March 2020 to February 2023. The visualization reveals distinct peaks in certain months—such as January, April, and June—and lower volumes in months like March, October, and December. This temporal pattern supports the analysis of seasonal trends and highlights periods of significant workforce reductions.
+
+![Time Series Trends](images/time_series_trends.png)
+
+---
+
+## Industry Breakdown
+
+The dashboard includes visualizations that break down layoffs by industry. These charts highlight that the consumer, retail, and transportation sectors have experienced the highest impact. The percentage share of layoffs for each industry is also clearly represented, enabling a comparative analysis across different sectors.
+
+![Industry Breakdown](images/industry_breakdown.png)
+
+---
+
+## Geographic Distribution
+
+Map visuals illustrate the geographic concentration of layoffs. The United States dominates with 67% of layoffs, followed by India at 9%. This interactive map allows stakeholders to explore regional trends and understand the distribution of layoffs across various countries.
+
+![Geographic Distribution](images/geographic_distribution.png)
+
+---
+
+## Company Rankings
+
+The dashboard includes ranking visuals that identify top companies by layoffs on both a monthly and yearly basis. These charts highlight significant cases, such as major layoffs at Amazon, Google, Meta, and complete shutdowns like Katerra. Such rankings provide a clear picture of which companies and sectors are most impacted.
+
+![Company Rankings](images/company_rankings.png)
+
+---
+
+## Conclusion
+
+This Power BI dashboard effectively complements our previous SQL exploratory data analysis by translating detailed quantitative insights into interactive and visually engaging representations. Key takeaways include:
+
+- **High Overall Impact:**  
+  Nearly **386,379** employees were laid off over the analyzed period, with an average layoff of **238 employees per company** (25.92%). The extreme cases, such as layoffs of up to **12,000** employees, highlight the market's volatility.
+
+- **Sector & Geographic Insights:**  
+  The consumer sector and the United States show the highest impact, while other regions and industries are relatively less affected. This concentration emphasizes the importance of targeted strategies in the most affected areas.
+
+- **Critical Case Studies:**  
+  The complete shutdowns of well-funded companies like Katerra, as well as significant layoffs at major tech giants, underscore the challenges across different segments of the market.
+
+- **Actionable Trends:**  
+  The clear seasonal patterns and year-over-year shifts observed in the dashboard support proactive workforce planning and strategic decision-making. Recognizing these trends allows stakeholders to better manage risk and optimize resource allocation.
+
+Overall, the integration of Power BI visualizations with our data analysis not only validates the SQL insights but also provides a dynamic platform for continuous monitoring and deeper exploration of the layoffs data. Stakeholders can leverage these insights to build more resilient business strategies and adapt effectively to the evolving market landscape.
+
+---
+
+*Note: Replace the placeholder image filenames in the `images/` folder with actual screenshots from your Power BI file.*
