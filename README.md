@@ -70,6 +70,11 @@ Ranking visualizations offer insights into which companies bear the brunt of lay
 The dashboard presents detailed visualizations breaking down layoffs by company stage, clearly illustrating which stages are most affected. Notably, POST-IPO companies consistently show the highest impact. The charts also display the percentage share of total layoffs for each stage, allowing stakeholders to perform comparative analyses and track trends over time.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182200.png)
 
+### Company Closure Analysis Dashboard
+
+This dashboard provides a focused look at companies that have completely shut down, highlighting key metrics such as Layoffs Due to Close Down, Industries Observed, and Total Funds Raised (Millions). At the top right, it features the Company with the Most Funds Raised, drawing attention to notable high-funding closures (e.g., Britishvolt).
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182129.png)
+
 ---
 
 
