@@ -58,7 +58,7 @@ The dashboard features visualizations that break down layoffs by industry, highl
 
 ### Geographic Distribution
 
-Interactive map visuals detail the geographic concentration of layoffs, providing a spatial perspective on the data. The maps show that the United States is the dominant region affected, with a significant proportion of layoffs occurring there, while countries like India also register a notable impact. This geographical breakdown helps stakeholders understand regional market dynamics and identify localized trends that may influence strategic planning and resource allocation.
+The bars and charts detail the geographic concentration of layoffs, providing a spatial perspective on the data. It show that the United States is the dominant region affected, with a significant proportion of layoffs occurring there, while countries like India also register a notable impact. This geographical breakdown helps stakeholders understand regional market dynamics and identify localized trends that may influence strategic planning and resource allocation.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-27%20120054.png)
 
 ### Company Rankings
