@@ -1,5 +1,8 @@
 # Company Layoffs Exploratory Data Analysis Project With SQL and Power BI
-This project leverages SQL and Power BI to deliver a comprehensive analysis of competitor layoffs data with a total of **1000** records. Our analysis focuses on key north star metrics that highlight overall workforce reductions, the average impact per company, and detailed breakdowns by industry, geography, and time periods. The dashboards and queries reveal seasonal trends, patterns in company shutdowns, and ranking insights that are essential for understanding market dynamics and identifying areas of vulnerability and opportunity. These metrics provide a clear, strategic view of the evolving landscape and support data-driven decision-making. Note that the CSV file had to go though data cleaning before being considered eligible for the exploratory data analysis and then further visualization. For a detailed view of the **data cleaning** queries, [click here](./data_cleaning.sql). For further insights on the **EDA with SQL**, [click here](./analysis.sql).
+This project leverages SQL and Power BI to deliver a comprehensive analysis of competitor layoffs data with a total of **1000** records. Our analysis focuses on key north star metrics that highlight overall workforce reductions, the average impact per company, and detailed breakdowns by industry, geography, and time periods. The dashboards and queries reveal seasonal trends, patterns in company shutdowns, and ranking insights that are essential for understanding market dynamics and identifying areas of vulnerability and opportunity. These metrics provide a clear, strategic view of the evolving landscape and support data-driven decision-making. Note that the CSV file had to go though data cleaning before being considered eligible for the exploratory data analysis and then further visualization. *To explore further details on the data cleaning queries and the comprehensive EDA, please see the following links:*
+
+- [Click here for the Data Cleaning SQL file](./data_cleaning.sql)
+- [Click here for the Analysis SQL file](./analysis.sql)
 
 
 ## Table of Contents
@@ -39,43 +42,27 @@ The analysis of our competitor layoff data—covering the period from **March 20
 
 ---
 
-## Dashboard Overview
+### Dashboard Overview
 
-The main dashboard provides an at-a-glance view of key metrics such as total layoffs, average layoffs per company, and overall percentages. This visualization sets the context for the deeper analyses presented in subsequent sections.
+The main dashboard consolidates all key metrics, offering an at-a-glance view of the overall layoff landscape. It displays total layoffs, average layoffs per company, and overall percentages across multiple dimensions. This high-level snapshot provides immediate context, setting the stage for more in-depth analyses that explore temporal trends, industry impacts, geographic distributions, and company-specific rankings.
 
-![Dashboard Overview](images/dashboard_overview.png)
+### Time Series Trends
 
----
+The time series chart covers the period from March 2020 to February 2023, mapping the evolution of layoffs over time. It reveals distinct peaks during critical months—such as January, April, and June—indicating periods of significant restructuring and market pressure, while also showing lower activity in months like March, October, and December. This visualization not only captures seasonal variations but also reflects broader economic shifts and pivotal events that drive workforce adjustments.
 
-## Time Series Trends
+### Industry Breakdown
 
-The time series chart displays layoffs over the period from March 2020 to February 2023. The visualization reveals distinct peaks in certain months—such as January, April, and June—and lower volumes in months like March, October, and December. This temporal pattern supports the analysis of seasonal trends and highlights periods of significant workforce reductions.
+The dashboard features detailed visualizations that break down layoffs by industry, highlighting which sectors are most affected. It clearly illustrates that sectors such as consumer, retail, and transportation consistently experience the highest impact. These charts also depict the percentage share of total layoffs for each industry, enabling stakeholders to perform comparative analyses and identify trends over multiple time periods—such as the recurring impact on consumer industries and emerging pressures in tech sectors.
 
-![Time Series Trends](images/time_series_trends.png)
+### Geographic Distribution
 
----
+Interactive map visuals detail the geographic concentration of layoffs, providing a spatial perspective on the data. The maps show that the United States is the dominant region affected, with a significant proportion of layoffs occurring there, while countries like India also register a notable impact. This geographical breakdown helps stakeholders understand regional market dynamics and identify localized trends that may influence strategic planning and resource allocation.
 
-## Industry Breakdown
+### Company Rankings
 
-The dashboard includes visualizations that break down layoffs by industry. These charts highlight that the consumer, retail, and transportation sectors have experienced the highest impact. The percentage share of layoffs for each industry is also clearly represented, enabling a comparative analysis across different sectors.
-
-![Industry Breakdown](images/industry_breakdown.png)
+Ranking visualizations offer insights into which companies bear the brunt of layoffs on both monthly and yearly bases. These charts highlight major cases—such as significant workforce reductions at industry giants like Amazon, Google, and Meta—and spotlight extreme instances of complete shutdowns, as seen with companies like Katerra. The rankings are interactive, allowing users to filter and drill down into specific periods or sectors, thereby providing a clear view of the competitive landscape and strategic vulnerabilities.
 
 ---
-
-## Geographic Distribution
-
-Map visuals illustrate the geographic concentration of layoffs. The United States dominates with 67% of layoffs, followed by India at 9%. This interactive map allows stakeholders to explore regional trends and understand the distribution of layoffs across various countries.
-
-![Geographic Distribution](images/geographic_distribution.png)
-
----
-
-## Company Rankings
-
-The dashboard includes ranking visuals that identify top companies by layoffs on both a monthly and yearly basis. These charts highlight significant cases, such as major layoffs at Amazon, Google, Meta, and complete shutdowns like Katerra. Such rankings provide a clear picture of which companies and sectors are most impacted.
-
-![Company Rankings](images/company_rankings.png)
 
 
 
@@ -98,4 +85,3 @@ Key findings indicate:
   The clear seasonal patterns and year-over-year shifts observed in the dashboard support proactive workforce planning and strategic decision-making. Recognizing these trends allows stakeholders to better manage risk and optimize resource allocation.
 
 Overall, the integration of Power BI visualizations with our data analysis not only validates the SQL insights but also provides a dynamic platform for continuous monitoring and deeper exploration of the layoffs data. Stakeholders can leverage these insights to build more resilient business strategies and adapt effectively to the evolving market landscape. These insights provide a roadmap for stakeholders to build more resilient business strategies, optimize workforce planning, and adapt to ongoing market challenges.
-
