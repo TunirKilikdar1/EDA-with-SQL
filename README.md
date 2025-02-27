@@ -53,7 +53,8 @@ The time series chart covers the period from March 2020 to February 2023, mappin
 ### Industry Breakdown
 
 The dashboard features detailed visualizations that break down layoffs by industry, highlighting which sectors are most affected. It clearly illustrates that sectors such as consumer, retail, and transportation consistently experience the highest impact. These charts also depict the percentage share of total layoffs for each industry, enabling stakeholders to perform comparative analyses and identify trends over multiple time periods—such as the recurring impact on consumer industries and emerging pressures in tech sectors.
-![Power BI Dashboard](images/Screenshot 2025-02-24 182142.png)
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182142.png)
+
 
 
 ### Geographic Distribution
