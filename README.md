@@ -44,35 +44,35 @@ The analysis of our competitor layoff data—covering the period from **March 20
 
 ### Dashboard Overview
 
-The main dashboard consolidates all key metrics, offering an at-a-glance view of the overall layoff landscape. It displays total layoffs, average layoffs per company, and overall percentages across multiple dimensions. This high-level snapshot provides immediate context, setting the stage for more in-depth analyses that explore temporal trends, industry impacts, geographic distributions, and company-specific rankings. - [Click here for the Power BI Visualization](./layoffs.pbix)
+The main dashboard consolidates all key metrics, offering an at-a-glance view of the overall layoff landscape. It displays total layoffs, average layoffs per company, and overall percentages across multiple dimensions and then provides immediate context, setting the stage for more in-depth analyses that explore temporal trends, industry impacts, geographic distributions, and company-specific rankings. - [Click here for the Power BI Visualization](./layoffs.pbix)
 
 ### Time Series Trends
 
-The time series chart covers the period from March 2020 to February 2023, mapping the evolution of layoffs over time. It reveals distinct peaks during critical months—such as January, April, and June—indicating periods of significant restructuring and market pressure, while also showing lower activity in months like March, October, and December. This visualization not only captures seasonal variations but also reflects broader economic shifts and pivotal events that drive workforce adjustments.
+This visualization covers the period from March 2020 to February 2023, mapping the evolution of layoffs over time. It reveals distinct peaks during critical months—such as January, April, and June—indicating periods of significant restructuring and market pressure, while also showing lower activity in months like March, October, and December. This visualization not only captures seasonal variations but also reflects broader economic shifts and pivotal events that drive workforce adjustments.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182054.png)
 
 ### Industry Breakdown
 
-The dashboard features detailed visualizations that break down layoffs by industry, highlighting which sectors are most affected. It clearly illustrates that sectors such as consumer, retail, and transportation consistently experience the highest impact. These charts also depict the percentage share of total layoffs for each industry, enabling stakeholders to perform comparative analyses and identify trends over multiple time periods—such as the recurring impact on consumer industries and emerging pressures in tech sectors.
+The dashboard features visualizations that break down layoffs by industry, highlighting which sectors are most affected. It clearly illustrates that sectors such as consumer, retail, and transportation consistently experience the highest impact. These charts also depict the percentage share of total layoffs for each industry, enabling stakeholders to perform comparative analyses and identify trends over multiple time periods—such as the recurring impact on consumer industries and emerging pressures in tech sectors.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182142.png)
 
 ### Geographic Distribution
 
 Interactive map visuals detail the geographic concentration of layoffs, providing a spatial perspective on the data. The maps show that the United States is the dominant region affected, with a significant proportion of layoffs occurring there, while countries like India also register a notable impact. This geographical breakdown helps stakeholders understand regional market dynamics and identify localized trends that may influence strategic planning and resource allocation.
-![Power BI Dashboard Screenshot](images/Screenshot%2025-02-24%182113.png)
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-27%20120054.png)
 
 ### Company Rankings
 
 Ranking visualizations offer insights into which companies bear the brunt of layoffs on both monthly and yearly bases. These charts highlight major cases—such as significant workforce reductions at industry giants like Amazon, Google, and Meta—and spotlight extreme instances of complete shutdowns, as seen with companies like Katerra. The rankings are interactive, allowing users to filter and drill down into specific periods or sectors, thereby providing a clear view of the competitive landscape and strategic vulnerabilities.
-![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182142.png)
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-27%20120103.png)
 
 ### Company Stage Breakdown
-The dashboard presents detailed visualizations breaking down layoffs by company stage, clearly illustrating which stages are most affected. Notably, POST-IPO companies consistently show the highest impact. The charts also display the percentage share of total layoffs for each stage, allowing stakeholders to perform comparative analyses and track trends over time.
+The dashboard presents visualizations breaking down layoffs by company stage, clearly illustrating which stages are most affected. Notably, POST-IPO companies consistently show the highest impact. The charts also display the percentage share of total layoffs for each stage, allowing stakeholders to perform comparative analyses and track trends over time.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182200.png)
 
 ### Company Closure Analysis Dashboard
 
-This dashboard provides a focused look at companies that have completely shut down, highlighting key metrics such as Layoffs Due to Close Down, Industries Observed, and Total Funds Raised (Millions). At the top right, it features the Company with the Most Funds Raised, drawing attention to notable high-funding closures (e.g., Britishvolt).
+This dashboard provides look at companies that have completely shut down, highlighting key metrics such as Layoffs Due to Close Down, Industries Observed, and Total Funds Raised (Millions). At the top right, it features the Company with the Most Funds Raised, drawing attention to notable high-funding closures (e.g., Britishvolt).
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182129.png)
 
 ---
