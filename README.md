@@ -44,7 +44,7 @@ The analysis of our competitor layoff data—covering the period from **March 20
 
 ### Dashboard Overview
 
-The main dashboard consolidates all key metrics, offering an at-a-glance view of the overall layoff landscape. It displays total layoffs, average layoffs per company, and overall percentages across multiple dimensions. This high-level snapshot provides immediate context, setting the stage for more in-depth analyses that explore temporal trends, industry impacts, geographic distributions, and company-specific rankings. - [Click here for the Power BI Visualization (./layoffs.pbix)
+The main dashboard consolidates all key metrics, offering an at-a-glance view of the overall layoff landscape. It displays total layoffs, average layoffs per company, and overall percentages across multiple dimensions. This high-level snapshot provides immediate context, setting the stage for more in-depth analyses that explore temporal trends, industry impacts, geographic distributions, and company-specific rankings. - [Click here for the Power BI Visualization](./layoffs.pbix)
 
 ### Time Series Trends
 
