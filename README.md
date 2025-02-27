@@ -66,6 +66,10 @@ Interactive map visuals detail the geographic concentration of layoffs, providin
 Ranking visualizations offer insights into which companies bear the brunt of layoffs on both monthly and yearly bases. These charts highlight major cases—such as significant workforce reductions at industry giants like Amazon, Google, and Meta—and spotlight extreme instances of complete shutdowns, as seen with companies like Katerra. The rankings are interactive, allowing users to filter and drill down into specific periods or sectors, thereby providing a clear view of the competitive landscape and strategic vulnerabilities.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182142.png)
 
+### Company Stage Breakdown
+The dashboard presents detailed visualizations breaking down layoffs by company stage, clearly illustrating which stages are most affected. Notably, POST-IPO companies consistently show the highest impact. The charts also display the percentage share of total layoffs for each stage, allowing stakeholders to perform comparative analyses and track trends over time.
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182200.png)
+
 ---
 
 
