@@ -49,21 +49,22 @@ The main dashboard consolidates all key metrics, offering an at-a-glance view of
 ### Time Series Trends
 
 The time series chart covers the period from March 2020 to February 2023, mapping the evolution of layoffs over time. It reveals distinct peaks during critical months—such as January, April, and June—indicating periods of significant restructuring and market pressure, while also showing lower activity in months like March, October, and December. This visualization not only captures seasonal variations but also reflects broader economic shifts and pivotal events that drive workforce adjustments.
+![Power BI Dashboard Screenshot](images/Screenshot%2025-02-24%182054.png)
 
 ### Industry Breakdown
 
 The dashboard features detailed visualizations that break down layoffs by industry, highlighting which sectors are most affected. It clearly illustrates that sectors such as consumer, retail, and transportation consistently experience the highest impact. These charts also depict the percentage share of total layoffs for each industry, enabling stakeholders to perform comparative analyses and identify trends over multiple time periods—such as the recurring impact on consumer industries and emerging pressures in tech sectors.
 ![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182142.png)
 
-
-
 ### Geographic Distribution
 
 Interactive map visuals detail the geographic concentration of layoffs, providing a spatial perspective on the data. The maps show that the United States is the dominant region affected, with a significant proportion of layoffs occurring there, while countries like India also register a notable impact. This geographical breakdown helps stakeholders understand regional market dynamics and identify localized trends that may influence strategic planning and resource allocation.
+![Power BI Dashboard Screenshot](images/Screenshot%2025-02-24%182113.png)
 
 ### Company Rankings
 
 Ranking visualizations offer insights into which companies bear the brunt of layoffs on both monthly and yearly bases. These charts highlight major cases—such as significant workforce reductions at industry giants like Amazon, Google, and Meta—and spotlight extreme instances of complete shutdowns, as seen with companies like Katerra. The rankings are interactive, allowing users to filter and drill down into specific periods or sectors, thereby providing a clear view of the competitive landscape and strategic vulnerabilities.
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182142.png)
 
 ---
 
