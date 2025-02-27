@@ -49,7 +49,7 @@ The main dashboard consolidates all key metrics, offering an at-a-glance view of
 ### Time Series Trends
 
 The time series chart covers the period from March 2020 to February 2023, mapping the evolution of layoffs over time. It reveals distinct peaks during critical months—such as January, April, and June—indicating periods of significant restructuring and market pressure, while also showing lower activity in months like March, October, and December. This visualization not only captures seasonal variations but also reflects broader economic shifts and pivotal events that drive workforce adjustments.
-![Power BI Dashboard Screenshot](images/Screenshot%2025-02-24%182054.png)
+![Power BI Dashboard Screenshot](images/Screenshot%202025-02-24%20182054.png)
 
 ### Industry Breakdown
 
